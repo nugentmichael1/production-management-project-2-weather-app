@@ -11,7 +11,7 @@ Must make an account.  There are free subscriptions.  Use provided API Key to ma
 
 ## Free Plan API
 
-| API Feature                          | Link |
+| API Feature                          | Documentation |
 |--------------------------------------|------|
 | **Current Weather**                  | [OpenWeatherMap Current](https://openweathermap.org/current) |
 | **5 day / 3 hour forecast**          | [OpenWeatherMap Forecast](https://openweathermap.org/forecast5) |
