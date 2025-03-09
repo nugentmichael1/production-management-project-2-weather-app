@@ -1,9 +1,8 @@
 import requests # For making HTTP requests
 from config import API_KEY # Import the OpenWeather API key
 import threading # For threading
-import time # For sleep function
-from globals import weather_data
 from datetime import datetime
+from weather_data_repo import save_weather_data # A psuedo database for storing weather data
 
 # Prometheus metrics (if used)
 from prometheus_client import Gauge
@@ -25,8 +24,9 @@ def fetch_weather():
         response = requests.get(url)
 
         if response.status_code == 200:
+            # print(f"Memory address of weather_data in {__name__}: {id(weather_data)}")  # Debug log
             data = response.json()
-            weather_data.update({
+            weather_data = {
                 "city": data["name"],
                 "temperature": data["main"]["temp"],
                 "temperature_feels_like": data["main"]["feels_like"],
@@ -37,19 +37,20 @@ def fetch_weather():
                 "wind_direction": data["wind"]["deg"],
                 "wind_gust": data["wind"].get("gust",0),
                 "cloudiness": data["clouds"]["all"],
-            })
+            }
+            
+            save_weather_data(weather_data) # Save the weather data to a file (this is our psuedo database)
 
             # Update Prometheus metrics
             temperature_metric.set(weather_data["temperature"])
             humidity_metric.set(weather_data["humidity"])
             pressure_metric.set(weather_data["pressure"])
 
-            print(f"Updated weather data: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")} - {weather_data}")  # Debug log
+            print(f"Updated weather data: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} - {weather_data}")  # Debug log
 
         else:
             print(f"Failed to fetch weather data: {response.status_code}")
 
-        # time.sleep(60)  # Fetch data every 1 minute
         stop_event.wait(60)  # Wait for 1 minute or until the event is set
 
 weather_thread = None

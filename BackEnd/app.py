@@ -14,4 +14,4 @@ if __name__ == "__main__":
     if not os.environ.get("WERKZEUG_RUN_MAIN"):  # Prevent duplicate threads
         start_weather_thread()
     
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0", port=5000) #debug=True will auto-reload the server when changes are made
