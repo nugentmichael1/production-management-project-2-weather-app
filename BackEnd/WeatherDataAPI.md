@@ -6,8 +6,8 @@ https://openweathermap.org
 Must make an account.  There are free subscriptions.  Use provided API Key to make HTTP REST requests.  See individual request documentation at links below for specific syntaxes and response formats.
 
 ## Free Plan Allowance
-60 API calls/minute
-1,000,000 calls/month
+60 API calls/minute (Burst)
+1,000,000 calls/month (Sustained: about 23 calls/minute continuously)
 
 ## Free Plan API
 
