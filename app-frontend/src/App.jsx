@@ -19,7 +19,6 @@ function validateUser() {
 export default function App() {
   return (<>
     <NavDrawer />
-    <LoginComponent />
-    {validateUser() ? <Main /> : <RegisterComponent />}
+    {validateUser() ? <Main /> : <LoginComponent />}
   </>)
 }

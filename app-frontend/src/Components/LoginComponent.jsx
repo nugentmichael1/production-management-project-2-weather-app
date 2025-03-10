@@ -14,6 +14,11 @@ function loginUser(username, password) {
   }
 }
 
+function logoutUser() {
+  localStorage.removeItem('isLoggedIn');
+  console.log('User has been logged out.');
+}
+
 export default function LoginComponent() {
   const [formData, setFormData] = useState({ email: '', password: '' });
 
@@ -27,14 +32,16 @@ export default function LoginComponent() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    loginUser(formData.email, formData.password);
+    if (loginUser(formData.email, formData.password)) {
+      <Main />
+    };
     console.log('Form Data Submitted:', formData);
   };
 
   return (
-    <Box 
-      component="form" 
-      onSubmit={handleSubmit} 
+    <Box
+      component="form"
+      onSubmit={handleSubmit}
       sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -63,8 +70,20 @@ export default function LoginComponent() {
         required
         fullWidth
       />
-      <Button type="submit" variant="contained" color="primary" fullWidth>
+      <Button
+        type="submit"
+        variant="contained"
+        color="primary"
+        fullWidth>
         Submit
+      </Button>
+
+      <Button
+        onClick={logoutUser}
+        variant='contained'
+        component={Link}
+        to='/'>
+        Log Out
       </Button>
     </Box>
   );

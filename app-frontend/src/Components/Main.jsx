@@ -1,5 +1,5 @@
 import NavDrawer from "./Navigation/NavDrawer"
-import { Button, Link, Typography } from "@mui/material"
+import { Box, Button, Link, Typography } from "@mui/material"
 
 function logoutUser() {
     localStorage.removeItem('isLoggedIn');
@@ -7,15 +7,31 @@ function logoutUser() {
 }
 
 export default function Main() {
-    <>
-        <NavDrawer />
-        <Typography variant='h2'>Main Page</Typography>
-        <Button
-            onClick={logoutUser()}
-            variant='contained'
-            component={Link}
-            to='/'>
-            Log Out
-        </Button>
+    return (<>
+        <Box
+            component="form"
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 2,
+                maxWidth: 400,
+                margin: 'auto',
+                marginTop: 4
+            }}>
+            <Typography
+                textAlign='center'
+                variant='h2'>
+                Main Page
+            </Typography>
+
+            <Button
+                onClick={logoutUser}
+                variant='contained'
+                component={Link}
+                to='/'>
+                Log Out
+            </Button>
+        </Box>
     </>
+    )
 }
