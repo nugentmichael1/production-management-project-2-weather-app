@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material';
 
+function registerUser(username, password) {
+  const user = { username, password };
+  localStorage.setItem('user', JSON.stringify(user));
+  console.log('User registered:', user);
+}
 export default function RegisterComponent() {
   const [formData, setFormData] = useState({ email: '', password: '' });
 
@@ -14,6 +19,7 @@ export default function RegisterComponent() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    registerUser(formData.email, formData.password);
     console.log('Form Data Submitted:', formData);
   };
 
@@ -30,7 +36,7 @@ export default function RegisterComponent() {
         marginTop: 4
       }}
     >
-      <Typography variant="h4" textAlign="center">Login</Typography>
+      <Typography variant="h4" textAlign="center">Register</Typography>
       <TextField
         label="Email"
         name="email"

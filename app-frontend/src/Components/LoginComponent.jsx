@@ -1,5 +1,18 @@
 import React, { useState } from 'react';
-import { TextField, Button, Box, Typography } from '@mui/material';
+import { TextField, Button, Box, Typography, Link } from '@mui/material';
+import Main from './Main';
+
+function loginUser(username, password) {
+  const storedUser = JSON.parse(localStorage.getItem('user'));
+  if (storedUser && storedUser.username === username && storedUser.password === password) {
+    localStorage.setItem('isLoggedIn', 'true');
+    console.log('User logged in successfully.');
+    return true;
+  } else {
+    console.log('Invalid username or password.');
+    return false;
+  }
+}
 
 export default function LoginComponent() {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -14,6 +27,7 @@ export default function LoginComponent() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    loginUser(formData.email, formData.password);
     console.log('Form Data Submitted:', formData);
   };
 
