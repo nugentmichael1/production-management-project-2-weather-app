@@ -1,5 +1,7 @@
-import { Box, Button, Link, Typography } from "@mui/material"
+import { Box, Typography } from "@mui/material"
 import LoginComponent from "./LoginComponent";
+import WeatherDashboard from "./WeatherDashboard";
+
 
 
 
@@ -17,27 +19,25 @@ function validateUser() {
 export default function Home() {
 
 
-    return (<>
-        <Box
-            component="form"
-            sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 2,
-                maxWidth: 400,
-                margin: 'auto',
-                marginTop: 4
-            }}>
-            <Typography
-                textAlign='center'
-                variant='h2'>
-                Main Page
-            </Typography>
+    return (
+        <>
+            <Box
+                component="form"
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 2,
+                    maxWidth: 400,
+                    margin: 'auto',
+                    marginTop: 4
+                }}
+            >
+                <Typography textAlign='center' variant='h2'>
+                    Main Page
+                </Typography>
+            </Box>
 
-        </Box>
-
-        {validateUser() ? null : <LoginComponent />}
-
-    </>
-    )
+            {validateUser() ? <WeatherDashboard/> : <LoginComponent />}
+        </>
+    );
 }
