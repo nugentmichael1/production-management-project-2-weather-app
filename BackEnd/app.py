@@ -1,6 +1,6 @@
 from flask import Flask
 from routes import routes # Import the routes Blueprint
-from weather_fetcher import start_weather_thread
+from weather_fetcher import start_weather_threads
 import os
 
 app = Flask(__name__)
@@ -12,6 +12,6 @@ app.register_blueprint(routes)
 if __name__ == "__main__":
     # Start the weather fetching thread
     if not os.environ.get("WERKZEUG_RUN_MAIN"):  # Prevent duplicate threads
-        start_weather_thread()
+        start_weather_threads()
     
-    app.run(debug=True, host="0.0.0.0", port=5000) #debug=True will auto-reload the server when changes are made
+    app.run(debug=False, host="0.0.0.0", port=5000) #debug=True will auto-reload the server when changes are made
