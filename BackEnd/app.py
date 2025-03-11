@@ -1,9 +1,11 @@
 from flask import Flask
+from flask_cors import CORS
 from routes import routes # Import the routes Blueprint
 from weather_fetcher import start_weather_threads
 import os
 
 app = Flask(__name__)
+CORS(app) # Enable CORS for all domains & routes (Not good production practice!)
 
 # Register the Blueprint with the Flask app
 app.register_blueprint(routes)
