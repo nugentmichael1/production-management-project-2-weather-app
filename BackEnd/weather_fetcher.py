@@ -1,16 +1,21 @@
 import requests # For making HTTP requests
 from config import API_KEY # Import the OpenWeather API key
 import threading # For threading
-from datetime import datetime
+# from datetime import datetime # For debugging
 import globals# Import the global dictionary to store weather data
 
 # Prometheus metrics (if used)
-from prometheus_client import Gauge
+from prometheus_client import Gauge, Histogram
 
 # Define Prometheus metrics
+# Gauges are used for values that can go up and down
 temperature_metric = Gauge('weather_temperature', 'Current temperature', ['city'])
 humidity_metric = Gauge('weather_humidity', 'Current humidity', ['city'])
 pressure_metric = Gauge('weather_pressure', 'Current pressure', ['city'])
+wind_speed_metric = Gauge('weather_wind_speed', 'Current wind speed', ['city'])
+wind_direction_metric = Gauge('weather_wind_direction', 'Current wind direction', ['city'])
+wind_gust_metric = Gauge('weather_wind_gust', 'Current wind gust', ['city'])
+cloudiness_metric = Gauge('weather_cloudiness', 'Current cloud coverage', ['city'])
 
 # Event dictionary to stop weather fetching threads
 stop_events = {}
@@ -18,19 +23,19 @@ stop_events = {}
 CITIES = {
     'Houston': {"lon": -95.3676974, "lat": 29.7589382},
     'Los Angeles': {"lon": -118.242766, "lat": 34.0536909},
-    # 'New York': {"lon": -74.0060152, "lat": 40.7127281},
-    # 'Chicago': {"lon": -87.6244212, "lat": 41.8755616},
-    # 'Miami': {"lon": -80.1917902, "lat": 25.7616798},
-    # 'Phoenix': {"lon": -112.0740373, "lat": 33.4483766},
-    # 'Philadelphia': {"lon": -75.163789, "lat": 39.9524152},
-    # 'San Diego': {"lon": -117.1627728, "lat": 32.7174209},
-    # 'Dallas': {"lon": -96.7968559, "lat": 32.7762719},
-    # 'San Jose': {"lon": -121.8863286, "lat": 37.3382082},
-    # 'Columbus': {"lon": -83.0007065, "lat": 39.9622601},
-    # 'Charlotte': {"lon": -80.8431267, "lat": 35.2270869},
-    # 'Indianapolis': {"lon": -86.158068, "lat": 39.7683331},
-    # 'Seattle': {"lon": -122.3300624, "lat": 47.6038321},
-    # 'Denver': {"lon": -104.9847185, "lat": 39.7392364},
+    'New York': {"lon": -74.0060152, "lat": 40.7127281},
+    'Chicago': {"lon": -87.6244212, "lat": 41.8755616},
+    'Miami': {"lon": -80.1917902, "lat": 25.7616798},
+    'Phoenix': {"lon": -112.0740373, "lat": 33.4483766},
+    'Philadelphia': {"lon": -75.163789, "lat": 39.9524152},
+    'San Diego': {"lon": -117.1627728, "lat": 32.7174209},
+    'Dallas': {"lon": -96.7968559, "lat": 32.7762719},
+    'San Jose': {"lon": -121.8863286, "lat": 37.3382082},
+    'Columbus': {"lon": -83.0007065, "lat": 39.9622601},
+    'Charlotte': {"lon": -80.8431267, "lat": 35.2270869},
+    'Indianapolis': {"lon": -86.158068, "lat": 39.7683331},
+    'Seattle': {"lon": -122.3300624, "lat": 47.6038321},
+    'Denver': {"lon": -104.9847185, "lat": 39.7392364},
 }
 
 
@@ -68,8 +73,12 @@ def fetch_weather(lat:float, lon:float, stop_event)->None:
             temperature_metric.labels(city=weather_data["city"]).set(weather_data["temperature"])
             humidity_metric.labels(city=weather_data["city"]).set(weather_data["humidity"])
             pressure_metric.labels(city=weather_data["city"]).set(weather_data["pressure"])
-
-            print(f"Updated weather data: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} - {weather_data}")  # Debug log
+            wind_speed_metric.labels(city=weather_data["city"]).set(weather_data["wind_speed"])
+            wind_direction_metric.labels(city=weather_data["city"]).set(weather_data["wind_direction"])
+            wind_gust_metric.labels(city=weather_data["city"]).set(weather_data["wind_gust"])
+            cloudiness_metric.labels(city=weather_data["city"]).set(weather_data["cloudiness"])
+            
+            # print(f"Updated weather data: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} - {weather_data}")  # Debug log
 
         else:
             print(f"Failed to fetch weather data: {response.status_code}")
@@ -81,7 +90,6 @@ weather_thread = None
 # Start weather fetching in a background thread
 def start_weather_threads():
     """Starts a weather thread for each city."""
-    
     global weather_threads
     
     # Stop any existing threads
@@ -89,7 +97,7 @@ def start_weather_threads():
     
     # Start new threads
     for city, coords in CITIES.items():
-        print(f"Starting weather thread for {city}...")
+        # print(f"Starting weather thread for {city}...")
         # print(f"coords:{coords}")
         # print(f"Coordinates: lat:{coords["lat"]}, lon:{coords["lon"]}")
         stop_events[city] = threading.Event() # Create a stop event for each city
