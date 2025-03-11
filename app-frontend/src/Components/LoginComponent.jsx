@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box, Typography, Link } from '@mui/material';
-import Main from './Main';
+import Home from './Home';
 
 function loginUser(username, password) {
   const storedUser = JSON.parse(localStorage.getItem('user'));
@@ -31,14 +31,16 @@ export default function LoginComponent() {
   };
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault(); 
     if (loginUser(formData.email, formData.password)) {
-      <Main />
+     { <Home />}
     };
     console.log('Form Data Submitted:', formData);
+    // window.location.reload();
   };
 
   return (
+    <>
     <Box
       component="form"
       onSubmit={handleSubmit}
@@ -51,7 +53,7 @@ export default function LoginComponent() {
         marginTop: 4
       }}
     >
-      <Typography variant="h4" textAlign="center">Login</Typography>
+      <Typography variant="h6" textAlign="center">Login</Typography>
       <TextField
         label="Email"
         name="email"
@@ -86,5 +88,6 @@ export default function LoginComponent() {
         Log Out
       </Button>
     </Box>
+    </>
   );
 };
