@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material"
 import LoginComponent from "./LoginComponent";
-import WeatherDashboard from "./WeatherDashboard";
+import CitySelector from "./CitySelector";
 
 
 
@@ -37,7 +37,7 @@ export default function Home() {
                 </Typography>
             </Box>
 
-            {validateUser() ? <WeatherDashboard/> : <LoginComponent />}
+            {validateUser() ? <CitySelector/> : <LoginComponent />}
         </>
     );
 }
