@@ -18,15 +18,18 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import Typography from '@mui/material/Typography';
-
+import Home from '../Home';
 
 const navItems = ['Home', 'Contact'];
 const navItems2 = ['Account', 'Settings', 'Logout'];
 
 export default function NavDrawer() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  // const [state, setState] = useState(false);
-  // const navigateTrigger = useNavigate();
+
+  function logoutUser() {
+    localStorage.removeItem('isLoggedIn');
+    console.log('User has been logged out.');
+  }
 
   return (<>
 
@@ -95,7 +98,7 @@ export default function NavDrawer() {
               textAlign: 'left'
             }}
               component={Link}
-              to='/fitness/contact'
+              to='/contact'
               onClick={() => {
                 console.info("CONTACT US BUTTON TEST");
                 setIsDrawerOpen(false);
@@ -166,10 +169,11 @@ export default function NavDrawer() {
 
             {item === 'Logout' ? <ListItemButton sx={{ borderTop: '1px solid black' }}
               component={Link}
-              to='/'
+              to='/login'
               onClick={() => {
                 console.info("LOGOUT BUTTON TEST");
                 setIsDrawerOpen(false);
+                logoutUser();
               }}>
               <LogoutIcon sx={{ margin: '5px' }} />
               <ListItemText primary={item} />

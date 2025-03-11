@@ -1,26 +1,19 @@
 import { Toolbar, Button, IconButton, Box } from "@mui/material";
 import { Link } from "../../../node_modules/react-router-dom/dist/index";
+import Home from "../Home";
+import { useState } from "react";
 
 // export default function Navbar({ loggedIn, setLoggedIn }) {
 
 export default function Navbar() {
 
-    // useEffect(() => {
-    //     const loggedInUser = localStorage.getItem('loggedInUser');
-    //     if (loggedInUser) {
-    //         setLoggedIn(true);
-    //     }
-    // }, []);
-
     function logoutUser() {
         localStorage.removeItem('isLoggedIn');
         console.log('User has been logged out.');
-        window.location.reload();
+        // window.location.reload();
     }
 
     return (<>
-
-
         {
             <Toolbar sx={{
                 //this rgb value is semi transparent
@@ -75,10 +68,9 @@ export default function Navbar() {
                             margin: '0px',
                             marginTop: '10px'
                         }}
-                        component={Link} to=''>
+                        component={Link} to='/login'>
                         Logout
                     </Button>
-
 
                 </Box>
             </Toolbar >

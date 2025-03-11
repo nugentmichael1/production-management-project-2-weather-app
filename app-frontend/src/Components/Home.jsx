@@ -1,23 +1,31 @@
 import { Box, Button, Link, Typography } from "@mui/material"
 import LoginComponent from "./LoginComponent";
-
-
-
-function validateUser() {
-    const isLoggedIn = localStorage.getItem('isLoggedIn');
-    if (isLoggedIn === 'true') {
-        console.log('User is logged in.');
-        return true;
-    } else {
-        console.log('User is NOT logged in.');
-        return false;
-    }
-}
+import NavDrawer from "./Navigation/NavDrawer";
+import { useState } from "react";
 
 export default function Home() {
 
+    //use this to refresh component instead of redirecting
+    //   const [refresh, setRefresh] = useState(false);
+    //   const refreshComponent = () => {
+    //     setRefresh(!refresh); // Toggle the state to trigger a re-render
+    //   };
+
+    function validateUser() {
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        if (isLoggedIn === 'true') {
+            console.log('User is logged in.');
+            // refreshComponent();
+            return true;
+        } else {
+            console.log('User is NOT logged in.');
+            // refreshComponent();
+            return false;
+        }
+    }
 
     return (<>
+        <NavDrawer />
         <Box
             component="form"
             sx={{
@@ -28,11 +36,11 @@ export default function Home() {
                 margin: 'auto',
                 marginTop: 4
             }}>
-            <Typography
+            {/* <Typography
                 textAlign='center'
                 variant='h2'>
                 Main Page
-            </Typography>
+            </Typography> */}
 
         </Box>
 

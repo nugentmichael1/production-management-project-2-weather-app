@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { TextField, Button, Box, Typography, Link } from '@mui/material';
 import LoginComponent from './LoginComponent';
 
@@ -6,10 +7,16 @@ function registerUser(username, password) {
   const user = { username, password };
   localStorage.setItem('user', JSON.stringify(user));
   console.log('User registered:', user);
+  goToNewComponent();
 }
 export default function RegisterComponent() {
   const [formData, setFormData] = useState({ email: '', password: '' });
 
+  //we use this to navigate to the Login component after successful registration
+  const navigate = useNavigate();
+  const goToNewComponent = () => {
+    navigate("/login");
+  }
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({
@@ -22,7 +29,6 @@ export default function RegisterComponent() {
     event.preventDefault();
     registerUser(formData.email, formData.password);
     console.log('Form Data Submitted:', formData);
-    {<LoginComponent />}
   };
 
   return (
