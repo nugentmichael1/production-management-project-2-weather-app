@@ -3,6 +3,8 @@ import LoginComponent from "./LoginComponent";
 import NavDrawer from "./Navigation/NavDrawer";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import CitySelector from "./CitySelector";
+import WeatherDashboard from "./WeatherDashboard";
 
 export default function Home() {
 
@@ -45,8 +47,10 @@ export default function Home() {
                 margin: 'auto',
                 marginTop: 4
             }}>
+            <CitySelector />
+            <WeatherDashboard />
         </Box>
-        { validateUser() ? GoToHome() : GoToLogin() }
+        {validateUser() ? GoToHome() : GoToLogin()}
 
     </>
     )
