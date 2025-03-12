@@ -25,7 +25,8 @@ export default function LoginComponent() {
   const handleSubmit = (event) => {
     event.preventDefault();
     loginUser(formData.email, formData.password);
-    console.log('Form Data Submitted:', formData);
+    //removed formData console output
+    console.log('Form Data Submitted:', null);
   }
 
   function loginUser(username, password) {
@@ -44,7 +45,8 @@ export default function LoginComponent() {
   //-----------Google Login------------------
 
   const handleSuccess = (credentialResponse) => {
-    console.log("Login Success:", credentialResponse);
+    //removed clientId and credential console output
+    console.log("Login Success:", null);
     //using localStorage for validation until sessions are integrated 
     localStorage.setItem("isLoggedIn", true)
     goToNewComponent();
