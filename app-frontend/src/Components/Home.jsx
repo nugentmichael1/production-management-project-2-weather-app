@@ -1,26 +1,35 @@
-import { Box, Button, Link, Typography } from "@mui/material"
+import { Box } from "@mui/material"
 import LoginComponent from "./LoginComponent";
 import NavDrawer from "./Navigation/NavDrawer";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function Home() {
 
-    //use this to refresh component instead of redirecting
-    //   const [refresh, setRefresh] = useState(false);
-    //   const refreshComponent = () => {
-    //     setRefresh(!refresh); // Toggle the state to trigger a re-render
-    //   };
+    //we use this to handle component redirects after validation
+    //useEffect ensures the component doesn't refresh inifinitely
+    const GoToHome = () => {
+        const navigate = useNavigate();
+        useEffect(() => {
+            navigate('/home')
+        }, [])
+    }
+    const GoToLogin = () => {
+        const navigate = useNavigate();
+        useEffect(() => {
+            navigate('/login')
+        }, [])
+    }
 
-    function validateUser() {
-        const isLoggedIn = localStorage.getItem('isLoggedIn');
-        if (isLoggedIn === 'true') {
-            console.log('User is logged in.');
-            // refreshComponent();
-            return true;
-        } else {
-            console.log('User is NOT logged in.');
-            // refreshComponent();
-            return false;
+    const validateUser = () => {
+
+        if (localStorage.getItem("isLoggedIn")) {
+            console.log("The user IS logged in")
+            return true
+        }
+        else {
+            console.log("The user IS NOT logged in")
+            return false
         }
     }
 
@@ -36,15 +45,8 @@ export default function Home() {
                 margin: 'auto',
                 marginTop: 4
             }}>
-            {/* <Typography
-                textAlign='center'
-                variant='h2'>
-                Main Page
-            </Typography> */}
-
         </Box>
-
-        {validateUser() ? null : <LoginComponent />}
+        { validateUser() ? GoToHome() : GoToLogin() }
 
     </>
     )

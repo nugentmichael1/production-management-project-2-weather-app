@@ -82,7 +82,7 @@ export default function NavDrawer() {
 
             {item === 'Home' ? <ListItemButton sx={{ textAlign: 'left' }}
               component={Link}
-              to='/'
+              to='/home'
               onClick={() => {
                 console.info("HOME BUTTON TEST");
                 setIsDrawerOpen(false);

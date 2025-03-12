@@ -36,7 +36,7 @@ export default function Navbar() {
                         margin: '0px',
                         marginTop: '10px'
                     }}
-                        component={Link} to='/'>
+                        component={Link} to='/home'>
                         Home
                     </Button>
 

@@ -8,7 +8,8 @@ import Home from './Components/Home';
 export default function App() {
   return (<>
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/home" element={<Home />} />
+      <Route path="/" element={<LoginComponent />} />
       <Route path="/register" element={<RegisterComponent />} />
       <Route path="/login" element={<LoginComponent />} />
     </Routes>

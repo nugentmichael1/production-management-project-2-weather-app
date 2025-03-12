@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom";
 export default function LoginComponent() {
   const [formData, setFormData] = useState({ email: '', password: '' });
 
-  //we use this to navigate to the Home component after       successful validation
+  //we use this to navigate to the Home component after successful validation
   const navigate = useNavigate();
   const goToNewComponent = () => {
-    navigate("/");
+    navigate("/home");
   }
 
   const handleChange = (event) => {
@@ -80,6 +80,7 @@ export default function LoginComponent() {
         </Button>
 
       </Box>
+
     </>
   );
 };

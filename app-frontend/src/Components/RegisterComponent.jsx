@@ -3,12 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { TextField, Button, Box, Typography, Link } from '@mui/material';
 import LoginComponent from './LoginComponent';
 
-function registerUser(username, password) {
-  const user = { username, password };
-  localStorage.setItem('user', JSON.stringify(user));
-  console.log('User registered:', user);
-  goToNewComponent();
-}
 export default function RegisterComponent() {
   const [formData, setFormData] = useState({ email: '', password: '' });
 
@@ -30,6 +24,13 @@ export default function RegisterComponent() {
     registerUser(formData.email, formData.password);
     console.log('Form Data Submitted:', formData);
   };
+
+  function registerUser(username, password) {
+    const user = { username, password };
+    localStorage.setItem('user', JSON.stringify(user));
+    console.log('User registered:', user);
+    goToNewComponent();
+  }
 
   return (
     <>
