@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { TextField, Button, Box, Typography, Link } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 
+import { GoogleLogin } from "@react-oauth/google";
+
 export default function LoginComponent() {
+  
   const [formData, setFormData] = useState({ email: '', password: '' });
 
   //we use this to navigate to the Home component after successful validation
@@ -38,6 +41,21 @@ export default function LoginComponent() {
     }
   }
 
+  //-----------Google Login------------------
+
+  const handleSuccess = (credentialResponse) => {
+    console.log("Login Success:", credentialResponse);
+    //using localStorage for validation until sessions are integrated 
+    localStorage.setItem("isLoggedIn", true)
+    goToNewComponent();
+  };
+
+  const handleError = () => {
+    console.log("Login Failed");
+  };
+
+  //-----------Google Login------------------
+
   return (
     <>
       <Box
@@ -52,6 +70,9 @@ export default function LoginComponent() {
           marginTop: 4
         }}
       >
+
+        <GoogleLogin onSuccess={handleSuccess} onError={handleError} />
+
         <Typography variant="h6" textAlign="center">Login</Typography>
         <TextField
           label="Email"
