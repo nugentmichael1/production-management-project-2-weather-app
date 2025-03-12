@@ -113,9 +113,50 @@
 ---
 
 
+## ** Docker Deployment**
+
+Use the prebuilt images for quick setup.
+
+### **📝 ****************************`.env`**************************** File**
+
+Ensure you have the **OpenWeather API key** set in `.env`:
+
+```sh
+OPENWEATHER_API_KEY=<Your OpenWeatherMap API Key>
+```
+
+### ** ****************************`docker-compose.yml`**************************** Configuration**
+
+```yaml
+services:
+  flask:
+    image: nugentmichael/weather-app-flask:latest
+    restart: always
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
+    networks:
+      - app-network
+
+  nginx:
+    image: nugentmichael/nginx-flask:latest
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - flask
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+```
+
 # Open Weather Map API
 ## Description
-This is the API our server uses for its data.  We query it once a minute for the latest updates to 15 cities.  This keeps up beneath the 23/calls per minute, but provides a large amount of data for it to serve to the front end, and for Prometheus and Grafana to analyze.
+This is the API our server uses to fetch its data.  We query it once a minute for the latest updates to 15 cities.  This keeps up beneath the 23/calls per minute, but provides a large amount of data for it to serve to the front end, and for Prometheus and Grafana to analyze.
 ## Host
 https://openweathermap.org
 
