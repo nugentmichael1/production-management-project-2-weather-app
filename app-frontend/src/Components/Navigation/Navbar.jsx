@@ -8,7 +8,7 @@ import { AuthContext } from "../../context/AuthContext";
 // export default function Navbar({ loggedIn, setLoggedIn }) {
 
 export default function Navbar() {
-    const { setIsLoggedIn } = useContext(AuthContext);
+    const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 
     function logoutUser() {
 
@@ -62,27 +62,30 @@ export default function Navbar() {
                         Register
                     </Button> */}
 
-                    <Button variant='contained' sx={{
-                        backgroundColor: 'grey',
-                        borderRadius: '0px',
-                        margin: '0px',
-                        marginTop: '10px'
-                    }}
-                        component={Link} to='/login'>
-                        Login
-                    </Button>
-
-                    <Button variant='contained'
-                        onClick={logoutUser}
-                        sx={{
+                    {!isLoggedIn ?
+                        <Button variant='contained' sx={{
                             backgroundColor: 'grey',
                             borderRadius: '0px',
                             margin: '0px',
                             marginTop: '10px'
                         }}
-                        component={Link} to='/login'>
-                        Logout
-                    </Button>
+                            component={Link} to='/login'>
+                            Login
+                        </Button>
+                        :
+
+                        <Button variant='contained'
+                            onClick={logoutUser}
+                            sx={{
+                                backgroundColor: 'grey',
+                                borderRadius: '0px',
+                                margin: '0px',
+                                marginTop: '10px'
+                            }}
+                            component={Link} to='/login'>
+                            Logout
+                        </Button>
+                    }
 
                 </Box>
             </Toolbar >

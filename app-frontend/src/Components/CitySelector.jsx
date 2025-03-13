@@ -12,7 +12,6 @@ import { AuthContext } from "../context/AuthContext";
 const BACKGROUND_IMAGE_URL = sunset;
 
 const CitySelector = () => {
-  const { isLoggedIn } = useContext(AuthContext)
   const [citiesData, setCitiesData] = useState({});
   const [search, setSearch] = useState("");
   const [filteredCities, setFilteredCities] = useState([]);
@@ -27,11 +26,6 @@ const CitySelector = () => {
     }, []);
 
   useEffect(() => {
-    if (!isLoggedIn) {
-        document.body.style.background = "#fff"; // White background when not logged in
-        return;
-    }
-
     if (selectedCity && citiesData[selectedCity]) {
       const condition = citiesData[selectedCity].weather;
       let bgImage = "";
@@ -48,7 +42,7 @@ const CitySelector = () => {
       document.body.style.background = `${bgImage} no-repeat center center fixed`;
       document.body.style.backgroundSize = "cover";
     }
-  }, [selectedCity, citiesData, isLoggedIn]);
+  }, [selectedCity, citiesData]);
   
 
   // Filter city names based on user input

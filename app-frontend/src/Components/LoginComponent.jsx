@@ -59,6 +59,7 @@ export default function LoginComponent() {
         console.log("Backend OAuth Login Success:", response.data)
         //using localStorage for validation until sessions are integrated 
         localStorage.setItem("isLoggedIn", true)
+        setIsLoggedIn(true);
         goToNewComponent();
       })
       .catch((error) => console.error("Backend OAuth Login Error:", error));
