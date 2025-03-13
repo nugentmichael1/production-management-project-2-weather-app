@@ -1,3 +1,14 @@
+# .env file
+Need this .env file.
+```txt
+REACT_APP_CLIENT_ID=<Your Google OAuth Client ID>
+REACT_APP_AUTH_URL=https://provider.com/oauth/authorize
+REACT_APP_TOKEN_URL=https://provider.com/oauth/token
+REACT_APP_REDIRECT_URI=http://localhost:3000/callback
+REACT_APP_BASE_URL_DEVELOPMENT=http://localhost:5000
+REACT_APP_BASE_URL_PRODUCTION=https://api.RevatureLearn.com
+```
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
