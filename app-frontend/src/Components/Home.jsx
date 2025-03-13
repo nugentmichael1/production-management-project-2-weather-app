@@ -43,12 +43,11 @@ export default function Home() {
                 display: 'flex',
                 flexDirection: 'column',
                 gap: 2,
-                maxWidth: 400,
+                // maxWidth: 400,
                 margin: 'auto',
                 marginTop: 4
             }}>
             <CitySelector />
-            <WeatherDashboard />
         </Box>
         {validateUser() ? GoToHome() : GoToLogin()}
 
