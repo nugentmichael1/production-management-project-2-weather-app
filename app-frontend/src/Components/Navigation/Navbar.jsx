@@ -1,14 +1,18 @@
 import { Toolbar, Button, IconButton, Box } from "@mui/material";
 import { Link } from "../../../node_modules/react-router-dom/dist/index";
 import Home from "../Home";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+
 
 // export default function Navbar({ loggedIn, setLoggedIn }) {
 
 export default function Navbar() {
+    const { setIsLoggedIn } = useContext(AuthContext);
 
     function logoutUser() {
         localStorage.removeItem('isLoggedIn');
+        setIsLoggedIn(false);
         console.log('User has been logged out.');
         // window.location.reload();
     }
