@@ -1,20 +1,28 @@
 import { Toolbar, Button, IconButton, Box } from "@mui/material";
 import { Link } from "../../../node_modules/react-router-dom/dist/index";
 import Home from "../Home";
+import apiClient from "../../apiClient";
 import { useState, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-
 
 // export default function Navbar({ loggedIn, setLoggedIn }) {
 
 export default function Navbar() {
-    const { setIsLoggedIn } = useContext(AuthContext);
+    const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 
     function logoutUser() {
-        localStorage.removeItem('isLoggedIn');
-        setIsLoggedIn(false);
-        console.log('User has been logged out.');
+
         // window.location.reload();
+
+        apiClient
+            .post("/logout")
+            .then((response) => {
+                console.log(response.data)
+                localStorage.removeItem('isLoggedIn');
+                setIsLoggedIn(false);
+                console.log('User has been logged out.');
+            })
+            .catch((error) => console.error("Logout Error:", error))
     }
 
     return (<>
@@ -43,7 +51,7 @@ export default function Navbar() {
                         component={Link} to='/home'>
                         Home
                     </Button>
-
+                    {/* 
                     <Button variant='contained' sx={{
                         backgroundColor: 'grey',
                         borderRadius: '0px',
@@ -52,29 +60,32 @@ export default function Navbar() {
                     }}
                         component={Link} to='/register'>
                         Register
-                    </Button>
+                    </Button> */}
 
-                    <Button variant='contained' sx={{
-                        backgroundColor: 'grey',
-                        borderRadius: '0px',
-                        margin: '0px',
-                        marginTop: '10px'
-                    }}
-                        component={Link} to='/login'>
-                        Login
-                    </Button>
-
-                    <Button variant='contained'
-                        onClick={logoutUser}
-                        sx={{
+                    {!isLoggedIn ?
+                        <Button variant='contained' sx={{
                             backgroundColor: 'grey',
                             borderRadius: '0px',
                             margin: '0px',
                             marginTop: '10px'
                         }}
-                        component={Link} to='/login'>
-                        Logout
-                    </Button>
+                            component={Link} to='/login'>
+                            Login
+                        </Button>
+                        :
+
+                        <Button variant='contained'
+                            onClick={logoutUser}
+                            sx={{
+                                backgroundColor: 'grey',
+                                borderRadius: '0px',
+                                margin: '0px',
+                                marginTop: '10px'
+                            }}
+                            component={Link} to='/login'>
+                            Logout
+                        </Button>
+                    }
 
                 </Box>
             </Toolbar >

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box, Typography, Link } from '@mui/material';
 import { useNavigate } from "react-router-dom";
-
 import { GoogleLogin } from "@react-oauth/google";
+import apiClient from '../apiClient';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 
@@ -16,42 +16,53 @@ export default function LoginComponent() {
     navigate("/home");
   }
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  // const handleChange = (event) => {
+  //   const { name, value } = event.target;
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     [name]: value,
+  //   }));
+  // };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    loginUser(formData.email, formData.password);
-    console.log('Form Data Submitted:', formData);
-  }
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   loginUser(formData.email, formData.password);
+  //   console.log('Form Data Submitted:', formData);
+  // }
 
-  function loginUser(username, password) {
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    if (storedUser && storedUser.username === username && storedUser.password === password) {
-      localStorage.setItem('isLoggedIn', 'true');
-      setIsLoggedIn(true);
-      console.log('User logged in successfully.')
-      goToNewComponent();
-      return true;
-    } else {
-      console.log('Invalid username or password.');
-      return false;
-    }
-  }
+
+  // function loginUser(username, password) {
+  //   const storedUser = JSON.parse(localStorage.getItem('user'));
+  //   if (storedUser && storedUser.username === username && storedUser.password === password) {
+  //     localStorage.setItem('isLoggedIn', 'true');
+  //     setIsLoggedIn(true);
+  //     console.log('User logged in successfully.')
+  //     goToNewComponent();
+  //     return true;
+  //   } else {
+  //     console.log('Invalid username or password.');
+  //     return false;
+  //   }
+  // }
 
   //-----------Google Login------------------
 
   const handleSuccess = (credentialResponse) => {
-    console.log("Login Success:", credentialResponse);
-    //using localStorage for validation until sessions are integrated 
-    localStorage.setItem("isLoggedIn", true)
-    setIsLoggedIn(true);
-    goToNewComponent();
+    console.log("Frontend OAuth Login Success:", credentialResponse);
+
+    const idToken = credentialResponse.credential
+
+    //Session implementation
+    apiClient
+      .post("/auth/google", { idToken })
+      .then((response) => {
+        console.log("Backend OAuth Login Success:", response.data)
+        //using localStorage for validation until sessions are integrated 
+        localStorage.setItem("isLoggedIn", true)
+        setIsLoggedIn(true);
+        goToNewComponent();
+      })
+      .catch((error) => console.error("Backend OAuth Login Error:", error));
   };
 
   const handleError = () => {
@@ -64,7 +75,7 @@ export default function LoginComponent() {
     <>
       <Box
         component="form"
-        onSubmit={handleSubmit}
+        // onSubmit={handleSubmit}
         sx={{
           display: 'flex',
           flexDirection: 'column',
@@ -77,7 +88,7 @@ export default function LoginComponent() {
 
         <GoogleLogin onSuccess={handleSuccess} onError={handleError} />
 
-        <Typography variant="h6" textAlign="center">Login</Typography>
+        {/* <Typography variant="h6" textAlign="center">Login</Typography>
         <TextField
           label="Email"
           name="email"
@@ -102,7 +113,7 @@ export default function LoginComponent() {
           color="primary"
           fullWidth>
           Submit
-        </Button>
+        </Button> */}
 
       </Box>
 
