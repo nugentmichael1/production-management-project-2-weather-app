@@ -1,1 +1,0 @@
-{"city": "Houston", "temperature": 286.45, "temperature_feels_like": 285.56, "humidity": 66, "pressure": 1018, "weather": "overcast clouds", "wind_speed": 7.2, "wind_direction": 330, "wind_gust": 12.35, "cloudiness": 100}

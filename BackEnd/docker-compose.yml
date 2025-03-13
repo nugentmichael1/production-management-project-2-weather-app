@@ -1,6 +1,6 @@
 services:
   flask:
-    build: .
+    build: ./flask
     container_name: flask-container
     restart: always
     ports:

@@ -1,0 +1,21 @@
+/* Apply the background to body (or html) */
+body {
+  background:
+  
+  url("../src/images/sunset1.jpg") no-repeat center center fixed;
+  background-size: cover;
+}
+
+
+body::before {
+  content: "";
+  position: fixed;  /* so it stays in place even when scrolling */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* background: rgba(255, 255, 255, 0.4);  */
+  /* You can use any color or alpha, e.g. rgba(0,0,0,0.5) for a dark tint */
+  z-index: 0;       /* sits behind any normal content */
+}
+
