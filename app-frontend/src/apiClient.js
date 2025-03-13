@@ -12,7 +12,4 @@ const apiClient = axios.create({
     },
 })
 
-console.log(apiClient)
-console.log(BASE_URL)
-
 export default apiClient;

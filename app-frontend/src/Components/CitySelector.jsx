@@ -11,7 +11,7 @@ const CitySelector = () => {
     // Fetch weather data 
     useEffect(() => {
         apiClient
-            .get("http://localhost:5000/current_weather/all_cities")
+            .get("/current_weather/all_cities")
             .then((response) => setCitiesData(response.data))
             .catch((error) => console.error("Error fetching data:", error));
     }, []);

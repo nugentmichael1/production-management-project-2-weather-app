@@ -15,32 +15,32 @@ export default function LoginComponent() {
     navigate("/home");
   }
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  // const handleChange = (event) => {
+  //   const { name, value } = event.target;
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     [name]: value,
+  //   }));
+  // };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    loginUser(formData.email, formData.password);
-    console.log('Form Data Submitted:', formData);
-  }
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   loginUser(formData.email, formData.password);
+  //   console.log('Form Data Submitted:', formData);
+  // }
 
-  function loginUser(username, password) {
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    if (storedUser && storedUser.username === username && storedUser.password === password) {
-      localStorage.setItem('isLoggedIn', 'true');
-      console.log('User logged in successfully.')
-      goToNewComponent();
-      return true;
-    } else {
-      console.log('Invalid username or password.');
-      return false;
-    }
-  }
+  // function loginUser(username, password) {
+  //   const storedUser = JSON.parse(localStorage.getItem('user'));
+  //   if (storedUser && storedUser.username === username && storedUser.password === password) {
+  //     localStorage.setItem('isLoggedIn', 'true');
+  //     console.log('User logged in successfully.')
+  //     goToNewComponent();
+  //     return true;
+  //   } else {
+  //     console.log('Invalid username or password.');
+  //     return false;
+  //   }
+  // }
 
   //-----------Google Login------------------
 
@@ -71,7 +71,7 @@ export default function LoginComponent() {
     <>
       <Box
         component="form"
-        onSubmit={handleSubmit}
+        // onSubmit={handleSubmit}
         sx={{
           display: 'flex',
           flexDirection: 'column',
@@ -84,7 +84,7 @@ export default function LoginComponent() {
 
         <GoogleLogin onSuccess={handleSuccess} onError={handleError} />
 
-        <Typography variant="h6" textAlign="center">Login</Typography>
+        {/* <Typography variant="h6" textAlign="center">Login</Typography>
         <TextField
           label="Email"
           name="email"
@@ -109,7 +109,7 @@ export default function LoginComponent() {
           color="primary"
           fullWidth>
           Submit
-        </Button>
+        </Button> */}
 
       </Box>
 

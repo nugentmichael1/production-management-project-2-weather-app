@@ -48,7 +48,7 @@ export default function Navbar() {
                         component={Link} to='/home'>
                         Home
                     </Button>
-
+{/* 
                     <Button variant='contained' sx={{
                         backgroundColor: 'grey',
                         borderRadius: '0px',
@@ -57,7 +57,7 @@ export default function Navbar() {
                     }}
                         component={Link} to='/register'>
                         Register
-                    </Button>
+                    </Button> */}
 
                     <Button variant='contained' sx={{
                         backgroundColor: 'grey',
