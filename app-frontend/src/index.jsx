@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import Navbar from './Components/Navigation/Navbar';
 
-import { GoogleOAuthProvider } from "@react-oauth/google";
+import { GoogleOAuthProvider } from "@react-oauth/google"
 
 const clientId = process.env.REACT_APP_CLIENT_ID;
 
