@@ -3,9 +3,11 @@ import { TextField, Button, Box, Typography, Link } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 
 import { GoogleLogin } from "@react-oauth/google";
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
 export default function LoginComponent() {
-  
+  const { setIsLoggedIn } = useContext(AuthContext);
   const [formData, setFormData] = useState({ email: '', password: '' });
 
   //we use this to navigate to the Home component after successful validation
@@ -32,6 +34,7 @@ export default function LoginComponent() {
     const storedUser = JSON.parse(localStorage.getItem('user'));
     if (storedUser && storedUser.username === username && storedUser.password === password) {
       localStorage.setItem('isLoggedIn', 'true');
+      setIsLoggedIn(true);
       console.log('User logged in successfully.')
       goToNewComponent();
       return true;
@@ -47,6 +50,7 @@ export default function LoginComponent() {
     console.log("Login Success:", credentialResponse);
     //using localStorage for validation until sessions are integrated 
     localStorage.setItem("isLoggedIn", true)
+    setIsLoggedIn(true);
     goToNewComponent();
   };
 
