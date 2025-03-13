@@ -2,3 +2,4 @@
 notes/*
 BackEnd/.env
 BackEnd/app.log
+BackEnd/flask/app.log
