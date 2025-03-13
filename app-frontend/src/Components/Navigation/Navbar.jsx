@@ -2,15 +2,24 @@ import { Toolbar, Button, IconButton, Box } from "@mui/material";
 import { Link } from "../../../node_modules/react-router-dom/dist/index";
 import Home from "../Home";
 import { useState } from "react";
+import apiClient from "../../apiClient";
 
 // export default function Navbar({ loggedIn, setLoggedIn }) {
 
 export default function Navbar() {
 
     function logoutUser() {
-        localStorage.removeItem('isLoggedIn');
-        console.log('User has been logged out.');
+
         // window.location.reload();
+
+        apiClient
+            .post("/logout")
+            .then((response) => {
+                console.log(response.data)
+                localStorage.removeItem('isLoggedIn');
+                console.log('User has been logged out.');
+            })
+            .catch((error) => console.error("Logout Error:", error))
     }
 
     return (<>

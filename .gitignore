@@ -1,3 +1,4 @@
 .vscode/
 notes/*
 BackEnd/.env
+BackEnd/app.log

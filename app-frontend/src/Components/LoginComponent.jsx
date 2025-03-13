@@ -3,9 +3,10 @@ import { TextField, Button, Box, Typography, Link } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 
 import { GoogleLogin } from "@react-oauth/google";
+import apiClient from '../apiClient';
 
 export default function LoginComponent() {
-  
+
   const [formData, setFormData] = useState({ email: '', password: '' });
 
   //we use this to navigate to the Home component after successful validation
@@ -44,10 +45,20 @@ export default function LoginComponent() {
   //-----------Google Login------------------
 
   const handleSuccess = (credentialResponse) => {
-    console.log("Login Success:", credentialResponse);
-    //using localStorage for validation until sessions are integrated 
-    localStorage.setItem("isLoggedIn", true)
-    goToNewComponent();
+    console.log("Frontend OAuth Login Success:", credentialResponse);
+
+    const idToken = credentialResponse.credential
+
+    //Session implementation
+    apiClient
+      .post("/auth/google", { idToken })
+      .then((response) => {
+        console.log("Backend OAuth Login Success:", response.data)
+        //using localStorage for validation until sessions are integrated 
+        localStorage.setItem("isLoggedIn", true)
+        goToNewComponent();
+      })
+      .catch((error) => console.error("Backend OAuth Login Error:", error));
   };
 
   const handleError = () => {
